@@ -5,6 +5,7 @@ from tensorflow.keras.layers import Dense, Activation
 from sklearn.metrics import confusion_matrix, accuracy_score, log_loss
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pickle
 
 
 
@@ -23,7 +24,7 @@ model = None
 
 def train_model():
     global model
-    # do not remove the predfined functions below
+    
     X_train, X_test, y_train, y_test = t2.split()
     X_train2, X_val, y_train2, y_val = split2()
 
@@ -80,18 +81,25 @@ def train_model():
 
     # Return the training and test accuracies rounded to two decimal places for both trained and tested data
     print("returning: training accuracy, test accuracy, model")
-    return round(training2_accuracy, 3), round(test_accuracy, 3)
+    return round(training2_accuracy, 3), round(test_accuracy, 3), model
+
+def save_model(model):
+    #save model
+    with open("mlp_model.pkl", "wb") as f:
+        pickle.dump(model, f)
 
 
 def prediction():
-    # do not remove the predfined functions below
-    train_model()
+    # load model
+    with open("mlp_model.pkl", "rb") as f:
+        mlp_model = pickle.load(f)
+
     X_train, X_test, y_train, y_test = t2.split()
     
     toInt = lambda x: int(round(x))
     
     # Perform prediction on the test data which whether each predicted probability is greater than 0.5 and convert to int
-    y_test_pred = model.predict(X_test)
+    y_test_pred = mlp_model.predict(X_test)
     test_length = len(y_test_pred)
     print(test_length)
 
