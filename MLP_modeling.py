@@ -1,8 +1,8 @@
 import data_preparation as t2
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation
-from sklearn.metrics import confusion_matrix, accuracy_score, log_loss
+from tensorflow.keras.layers import Dense
+from sklearn.metrics import confusion_matrix, accuracy_score, log_loss, f1_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pickle
@@ -35,7 +35,11 @@ def train_model():
     from keras.layers import Dense
     model.add(Dense(8, activation="relu", name="layer1"))
     model.add(Dense(8, activation="relu", name="layer2"))
-    model.add(Dense(1, activation="sigmoid", name="layer3"))
+    model.add(Dense(8, activation="relu", name="layer3"))
+    model.add(Dense(8, activation="relu", name="layer4"))
+    model.add(Dense(8, activation="relu", name="layer5"))
+    model.add(Dense(8, activation="relu", name="layer6"))
+    model.add(Dense(1, activation="sigmoid", name="layer7"))
     model.compile(loss="binary_crossentropy", optimizer="sgd")
     print(f'number of layers: {len(model.layers)}')
     
@@ -59,6 +63,7 @@ def train_model():
     print(y_train2_pred)
     
     training2_accuracy = accuracy_score(y_train2, y_train2_pred)
+    train2_f1score = f1_score(y_train2, y_train2_pred)
     training2_loss = log_loss(y_train2, y_train2_pred)
     print(f'training data model accuracy: {training2_accuracy}; training data model log loss: {training2_loss}')
     
@@ -76,12 +81,13 @@ def train_model():
     print(y_test_pred)
     
     test_accuracy = accuracy_score(y_test, y_test_pred)
+    test_f1score = f1_score(y_test, y_test_pred)
     test_loss = log_loss(y_test, y_test_pred)
     print(f'test data model accuracy: {test_accuracy}; test data model log loss: {test_loss}') 
 
     # Return the training and test accuracies rounded to two decimal places for both trained and tested data
-    print("returning: training accuracy, test accuracy, model")
-    return round(training2_accuracy, 3), round(test_accuracy, 3), model
+    print("returning: training accuracy, training f1 score, test accuracy, test f1 score, model")
+    return round(training2_accuracy, 3), round(train2_f1score, 3), round(test_accuracy, 3), round(test_f1score, 3), model
 
 def save_model(model):
     #save model
