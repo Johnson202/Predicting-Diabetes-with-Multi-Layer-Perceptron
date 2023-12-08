@@ -12,7 +12,7 @@ import seaborn as sns
 def split2():
   X_train1, X_test, y_train1, y_test = t2.split()
   
-  # Make a second split to create the final training set and the validation set and use random_state=2
+  # Make a second split to create the final training set and the validation set and use random_state=2 (will use validation at later stage of project)
   X_train2, X_val, y_train2, y_val = train_test_split(X_train1, y_train1, train_size=0.8, test_size=0.2, random_state=2)
   
   return X_train2, X_val, y_train2, y_val
@@ -79,6 +79,7 @@ def train_model():
     print(f'test data model accuracy: {test_accuracy}; test data model log loss: {test_loss}') 
 
     # Return the training and test accuracies rounded to two decimal places for both trained and tested data
+    print("returning: training accuracy, test accuracy, model")
     return round(training2_accuracy, 3), round(test_accuracy, 3)
 
 
