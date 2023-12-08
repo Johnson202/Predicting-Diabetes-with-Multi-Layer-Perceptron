@@ -1,1 +1,1 @@
-# Predicting-Diabetes-with-Multi-Layer-Perceptron-MLP-
+## Predicting Diabetes with Multi-Layer Perceptron (MLP)
