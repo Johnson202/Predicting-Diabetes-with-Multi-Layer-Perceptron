@@ -33,13 +33,14 @@ def train_model():
 
     # Import the Dense layer from Keras
     from keras.layers import Dense
-    model.add(Dense(8, activation="relu", name="layer1"))
-    model.add(Dense(8, activation="relu", name="layer2"))
-    model.add(Dense(8, activation="relu", name="layer3"))
-    model.add(Dense(8, activation="relu", name="layer4"))
-    model.add(Dense(8, activation="relu", name="layer5"))
-    model.add(Dense(8, activation="relu", name="layer6"))
-    model.add(Dense(1, activation="sigmoid", name="layer7"))
+
+    # add layers through iteration
+    n = 7 #number of layers
+    for i in range(1, n+1):
+        if i != n:
+            model.add(Dense(8, activation = "relu", name=f'layer{i}'))
+        else:
+            model.add(Dense(1, activation="sigmoid", name=f'layer{i}'))
     model.compile(loss="binary_crossentropy", optimizer="sgd")
     print(f'number of layers: {len(model.layers)}')
     
