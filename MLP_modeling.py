@@ -85,7 +85,7 @@ def train_model():
     test_loss = log_loss(y_test, y_test_pred)
     print(f'test data model accuracy: {test_accuracy}; test data model f1 score: {test_f1score}; test data model log loss: {test_loss}') 
 
-    # Return the training and test accuracies / f1 scores rounded to two decimal places for both training and test data
+    # Return the training and test accuracies / f1 scores rounded to three decimal places for both training and test data
     print("returning...training accuracy, training f1 score, test accuracy, test f1 score, model")
     return round(train2_accuracy, 3), round(train2_f1score, 3), round(test_accuracy, 3), round(test_f1score, 3), model
 
