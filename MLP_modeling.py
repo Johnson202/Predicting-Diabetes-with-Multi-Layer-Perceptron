@@ -45,49 +45,49 @@ def train_model():
     
     # Train the model on the training data for 200 epochs
     model.fit(X_train2, y_train2, epochs=200) #batch_size default setting is max allowable
-    print(model.summary())
+    # print(model.summary())
 
     toInt = lambda x: int(round(x))
 
-    # Evaluate the model on the training data and compute loss and accuracy
+    # Evaluate the model on the training data and compute loss and accuracy (and f1 score)
     y_train2_pred = model.predict(X_train2)
     train_length = len(y_train2)
-    print(train_length)
+    # print(train_length)
 
     for i in range(len(y_train2_pred)):
        pred = y_train2_pred[i]
        y_train2_pred[i] = toInt(pred[0])
-    print(y_train2_pred)
+    # print(y_train2_pred)
     
     y_train2_pred = y_train2_pred.reshape(train_length,)
-    print(y_train2_pred)
+    # print(y_train2_pred)
     
-    training2_accuracy = accuracy_score(y_train2, y_train2_pred)
+    train2_accuracy = accuracy_score(y_train2, y_train2_pred)
     train2_f1score = f1_score(y_train2, y_train2_pred)
-    training2_loss = log_loss(y_train2, y_train2_pred)
-    print(f'training data model accuracy: {training2_accuracy}; training data model log loss: {training2_loss}')
+    train2_loss = log_loss(y_train2, y_train2_pred)
+    print(f'training data model accuracy: {train2_accuracy}; training data model f1 score: {train2_f1score}; training data model log loss: {train2_loss}')
     
-    # Evaluate the model on the test data and compute loss and accuracy
+    # Evaluate the model on the test data and compute loss and accuracy (and f1 score)
     y_test_pred = model.predict(X_test)
     test_length = len(y_test_pred)
-    print(test_length)
+    # print(test_length)
 
     for i in range(len(y_test_pred)):
        pred = y_test_pred[i]
        y_test_pred[i] = toInt(pred[0])
-    print(y_test_pred)
+    # print(y_test_pred)
     
     y_test_pred = y_test_pred.reshape(test_length,)
-    print(y_test_pred)
+    # print(y_test_pred)
     
     test_accuracy = accuracy_score(y_test, y_test_pred)
     test_f1score = f1_score(y_test, y_test_pred)
     test_loss = log_loss(y_test, y_test_pred)
-    print(f'test data model accuracy: {test_accuracy}; test data model log loss: {test_loss}') 
+    print(f'test data model accuracy: {test_accuracy}; test data model f1 score: {test_f1score}; test data model log loss: {test_loss}') 
 
-    # Return the training and test accuracies rounded to two decimal places for both trained and tested data
-    print("returning: training accuracy, training f1 score, test accuracy, test f1 score, model")
-    return round(training2_accuracy, 3), round(train2_f1score, 3), round(test_accuracy, 3), round(test_f1score, 3), model
+    # Return the training and test accuracies / f1 scores rounded to two decimal places for both training and test data
+    print("returning...training accuracy, training f1 score, test accuracy, test f1 score, model")
+    return round(train2_accuracy, 3), round(train2_f1score, 3), round(test_accuracy, 3), round(test_f1score, 3), model
 
 def save_model(model):
     #save model
@@ -107,12 +107,12 @@ def prediction():
     # Perform prediction on the test data which whether each predicted probability is greater than 0.5 and convert to int
     y_test_pred = mlp_model.predict(X_test)
     test_length = len(y_test_pred)
-    print(test_length)
+    # print(test_length)
 
     for i in range(len(y_test_pred)):
        pred = y_test_pred[i]
        y_test_pred[i] = toInt(pred[0])
-    print(y_test_pred)
+    # print(y_test_pred)
     
     y_test_pred = y_test_pred.reshape(test_length,)
     print(y_test_pred)
