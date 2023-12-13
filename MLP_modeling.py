@@ -19,14 +19,8 @@ def split2():
   return X_train2, X_val, y_train2, y_val
 
 
-# Define a global variable to hold the model object
-model = None
-
-def train_model():
-    global model
-    
+def train_mlp_model():
     X_train, X_test, y_train, y_test = t2.split()
-    X_train2, X_val, y_train2, y_val = split2()
 
     # Initialize a sequential model
     model = Sequential()
@@ -45,28 +39,28 @@ def train_model():
     print(f'number of layers: {len(model.layers)}')
     
     # Train the model on the training data for 200 epochs
-    model.fit(X_train2, y_train2, epochs=200) #batch_size default setting is max allowable
+    model.fit(X_train, y_train, epochs=200) #batch_size default setting is max allowable
     # print(model.summary())
 
     toInt = lambda x: int(round(x))
 
     # Evaluate the model on the training data and compute loss and accuracy (and f1 score)
-    y_train2_pred = model.predict(X_train2)
-    train_length = len(y_train2)
+    y_train_pred = model.predict(X_train)
+    train_length = len(y_train)
     # print(train_length)
 
-    for i in range(len(y_train2_pred)):
-       pred = y_train2_pred[i]
-       y_train2_pred[i] = toInt(pred[0])
-    # print(y_train2_pred)
+    for i in range(len(y_train_pred)):
+       pred = y_train_pred[i]
+       y_train_pred[i] = toInt(pred[0])
+    # print(y_train_pred)
     
-    y_train2_pred = y_train2_pred.reshape(train_length,)
-    # print(y_train2_pred)
+    y_train_pred = y_train_pred.reshape(train_length,)
+    # print(y_train_pred)
     
-    train2_accuracy = accuracy_score(y_train2, y_train2_pred)
-    train2_f1score = f1_score(y_train2, y_train2_pred)
-    train2_loss = log_loss(y_train2, y_train2_pred)
-    print(f'training data model accuracy: {train2_accuracy}; training data model f1 score: {train2_f1score}; training data model log loss: {train2_loss}')
+    train_accuracy = accuracy_score(y_train, y_train_pred)
+    train_f1score = f1_score(y_train, y_train_pred)
+    train_loss = log_loss(y_train, y_train_pred)
+    print(f'training data model accuracy: {train_accuracy}; training data model f1 score: {train_f1score}; training data model log loss: {train_loss}')
     
     # Evaluate the model on the test data and compute loss and accuracy (and f1 score)
     y_test_pred = model.predict(X_test)
@@ -86,17 +80,17 @@ def train_model():
     test_loss = log_loss(y_test, y_test_pred)
     print(f'test data model accuracy: {test_accuracy}; test data model f1 score: {test_f1score}; test data model log loss: {test_loss}') 
 
-    # Return the training and test accuracies / f1 scores rounded to three decimal places for both training and test data
-    print("returning...training accuracy, training f1 score, test accuracy, test f1 score, model")
-    return round(train2_accuracy, 3), round(train2_f1score, 3), round(test_accuracy, 3), round(test_f1score, 3), model
+    # return model
+    print("returning...model")
+    return model
 
-def save_model(model):
+def save_mlp_model(model):
     #save model
     with open("mlp_model.pkl", "wb") as f:
         pickle.dump(model, f)
 
 
-def prediction():
+def mlp_prediction_results():
     # load model
     with open("mlp_model.pkl", "rb") as f:
         mlp_model = pickle.load(f)
